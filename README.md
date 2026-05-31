@@ -26,12 +26,13 @@ Additional features:
 - [Vue 3](https://vuejs.org) + TypeScript + Vite
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [CodeMirror 6](https://codemirror.net)
+- [Laravel 13](https://laravel.com) — embedded Laravel app bundled into `app.zip`
 - [@php-wasm/web-8-4](https://github.com/WordPress/wordpress-playground) — PHP 8.4 compiled to WebAssembly
 
 ## Running Locally
 
 ```bash
-bun install
+npm install
 ```
 
 Before building, make sure Composer dependencies are installed inside the embedded Laravel app:
@@ -47,11 +48,11 @@ composer install --no-dev --optimize-autoloader
 Then build and preview:
 
 ```bash
-bun run build
-bun run preview
+npm run build
+npm run preview
 ```
 
-`bun run build` bundles the Laravel app into `public/app.zip`, runs type checking, and produces the final static assets. `bun run preview` starts a local web server serving that output — use this rather than `bun run dev` when you need to test the full built artifact (e.g. WASM chunk reassembly).
+`npm run build` bundles the Laravel app into `public/app.zip`, runs type checking, and produces the final static assets. `npm run preview` starts a local web server serving that output — use this rather than `npm run dev` when you need to test the full built artifact (e.g. WASM chunk reassembly).
 
 ### Build pipeline
 

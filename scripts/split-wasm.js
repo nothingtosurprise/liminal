@@ -11,6 +11,7 @@ const DIST_ASSETS = join(import.meta.dirname, '..', 'dist', 'assets');
 const MAX_SIZE = 24 * 1024 * 1024; // 24 MiB (leave margin)
 
 const files = await readdir(DIST_ASSETS);
+const splitManifest = {};
 
 for (const file of files) {
     if (!file.endsWith('.wasm')) continue;
@@ -39,13 +40,15 @@ for (const file of files) {
         i++;
     }
 
-    // Write manifest
-    const manifestName = file.replace('.wasm', '.wasm.json');
-    await writeFile(join(DIST_ASSETS, manifestName), JSON.stringify({ chunks }));
-    console.log(`    → ${manifestName}`);
+    splitManifest[file] = chunks;
 
     // Remove original
     await unlink(filePath);
 }
 
+await writeFile(
+    join(DIST_ASSETS, 'wasm-chunks.json'),
+    JSON.stringify(splitManifest),
+);
+console.log(`  wasm-chunks.json → ${Object.keys(splitManifest).length} split file(s)`);
 console.log('Done.');
